@@ -8,10 +8,13 @@
 import Foundation
 import UIKit
 import Then
+import Kingfisher
 
 class UploadTweetController: UIViewController {
     
     // MARK: - Properties
+    
+    private let user : User
     
     private lazy var actionButton = UIButton(type: .system).then {
         $0.backgroundColor = .twitterBlue
@@ -25,7 +28,33 @@ class UploadTweetController: UIViewController {
         $0.addTarget(self, action: #selector(handleUploadTweet), for: .touchUpInside)
     }
     
+    private let profileImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.setDimensions(width: 48, height: 48)
+        $0.layer.cornerRadius = 48 / 2
+        $0.backgroundColor = .twitterBlue
+    }
+    
+    private let captionTextView = CaptionTextView()
+    
+    private lazy var stackView = UIStackView().then {
+        $0.addArrangedSubview(profileImageView)
+        $0.addArrangedSubview(captionTextView)
+        $0.axis = .horizontal
+        $0.spacing = 12
+    }
+    
     // MARK: - LifeCycle
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -37,7 +66,14 @@ class UploadTweetController: UIViewController {
     }
     
     @objc func handleUploadTweet() {
-        print("I'm handleUploadTweet")
+        guard let caption = captionTextView.text else { return }
+        TweetService.shared.uploadTweet(caption: caption) { error, ref in
+            if let error = error {
+                print("DEBUG: Failed to upload tweet with \(error.localizedDescription)")
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     // MARK: - API
@@ -46,7 +82,18 @@ class UploadTweetController: UIViewController {
     
     func configureUI() {
         view.backgroundColor = .systemBackground
+        configureNavigtionBar()
         
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        profileImageView.kf.setImage(with: user.profileImageUrl)
+    }
+    
+    func configureNavigtionBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
