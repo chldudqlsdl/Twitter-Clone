@@ -105,10 +105,4 @@ open class CustomNavigationController: UINavigationController {
     }
 }
 
-//extension UINavigationController {
-//    override open var childForStatusBarStyle: UIViewController? {
-//        return topViewController
-//    }
-//}
-
 

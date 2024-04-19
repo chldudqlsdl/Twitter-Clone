@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import Kingfisher
 
+protocol TweetCellDelegate: AnyObject {
+    func handelProfileImageTapped()
+}
+
 class TweetCell : UICollectionViewCell {
     
     // MARK: - Properties
@@ -17,12 +21,18 @@ class TweetCell : UICollectionViewCell {
         didSet { configure() }
     }
     
-    private let profileImageView = UIImageView().then {
+    weak var delegate: TweetCellDelegate?
+    
+    private lazy var profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.setDimensions(width: 48, height: 48)
         $0.layer.cornerRadius = 48 / 2
         $0.backgroundColor = .twitterBlue
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
+        $0.addGestureRecognizer(tapGesture)
+        $0.isUserInteractionEnabled = true
     }
     
     private let captionLabel = UILabel().then {
@@ -120,7 +130,7 @@ class TweetCell : UICollectionViewCell {
     // MARK: - Selectors
     
     @objc func handleCommentTapped() {
-        
+
     }
     @objc func handleRetweetTapped() {
         
@@ -131,6 +141,9 @@ class TweetCell : UICollectionViewCell {
     @objc func handleShareTapped() {
         
     }
+    @objc func handleProfileImageTapped() {
+        delegate?.handelProfileImageTapped()
+    }
     
     
     // MARK: - Helpers
@@ -140,6 +153,9 @@ class TweetCell : UICollectionViewCell {
         
         captionLabel.text = tweet.caption
         profileImageView.kf.setImage(with: viewModel.profileImageUrl)
-        infoLabel.text = tweet.user.username
+        infoLabel.attributedText = viewModel.userInfoText
     }
 }
+
+
+

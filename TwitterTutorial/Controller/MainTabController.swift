@@ -47,7 +47,7 @@ class MainTabController: UITabBarController {
     func authenticateUserAndConfigureUI() {
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginController())
+                let nav = CustomNavigationController(rootViewController: LoginController())
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
             }
@@ -108,7 +108,7 @@ class MainTabController: UITabBarController {
     }
     
     func templateNaviagtionController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
-        let nav = UINavigationController(rootViewController: rootViewController)
+        let nav = CustomNavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image
         return nav
     }
