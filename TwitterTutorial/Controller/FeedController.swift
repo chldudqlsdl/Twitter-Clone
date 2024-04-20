@@ -31,7 +31,11 @@ class FeedController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         fetchTweets()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     
@@ -102,8 +106,10 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
-    func handelProfileImageTapped() {
-        let vc = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+    func handelProfileImageTapped(_ cell: TweetCell) {
+        
+        guard let user = cell.tweet?.user else { return }
+        let vc = ProfileController(user: user)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 protocol TweetCellDelegate: AnyObject {
-    func handelProfileImageTapped()
+    func handelProfileImageTapped(_ cell: TweetCell)
 }
 
 class TweetCell : UICollectionViewCell {
@@ -142,7 +142,7 @@ class TweetCell : UICollectionViewCell {
         
     }
     @objc func handleProfileImageTapped() {
-        delegate?.handelProfileImageTapped()
+        delegate?.handelProfileImageTapped(self)
     }
     
     
