@@ -13,7 +13,6 @@ import Kingfisher
 class UploadTweetController: UIViewController {
     
     // MARK: - Properties
-    
     private let user : User
     
     private lazy var actionButton = UIButton(type: .system).then {
@@ -58,6 +57,10 @@ class UploadTweetController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+    }
+    
+    deinit {
+        print("UploadTweetController deinit")
     }
     
     // MARK: - Selectors

@@ -12,6 +12,9 @@ private let reuserIdentifier = "UserCell"
 class ExploreController: UITableViewController {
 
     // MARK: - Properties
+    private var users: [User] = [] {
+        didSet { tableView.reloadData() }
+    }
     
     
     // MARK: - LifeCycles
@@ -22,10 +25,15 @@ class ExploreController: UITableViewController {
         fetchUsers()
     }
     
+    deinit {
+        print("ExploreController deinit")
+    }
+    
     // MARK: - API
     
     func fetchUsers() {
-        UserService.shared.fetchUser { user in
+        UserService.shared.fetchUser { [weak self] users in
+            self?.users = users
         }
     }
     
@@ -44,11 +52,12 @@ class ExploreController: UITableViewController {
 
 extension ExploreController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuserIdentifier, for: indexPath) as! UserCell
+        cell.user = users[indexPath.row]
         return cell
     }
 }

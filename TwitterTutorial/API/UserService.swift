@@ -13,12 +13,15 @@ struct UserService {
     
     private init() {}
     
-    func fetchUser(completion: @escaping (User) -> Void) {
-//        var users: [User] = []
-//        REF_USERS.observe(.childAdded) { snapshot in
-//            let uid = snapshot.key
-//            let value = snapshot.value
-//        }
+    func fetchUser(completion: @escaping ([User]) -> Void) {
+        var users: [User] = []
+        REF_USERS.observe(.childAdded) { snapshot in
+            let uid = snapshot.key
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            let user = User(uid: uid, dictionary: dictionary)
+            users.append(user)
+            completion(users)
+        }
     }
     
     func fetchUser(uid: String, completion: @escaping (User) -> Void){
@@ -31,4 +34,3 @@ struct UserService {
         }
     }
 }
-

@@ -52,8 +52,8 @@ class ProfileController: UICollectionViewController {
     
     // MARK: - API
     func fetchTweet() {
-        TweetService.shared.fetchTweets(forUser: user) { tweets in
-            self.tweets = tweets
+        TweetService.shared.fetchTweets(forUser: user) { [weak self] tweets in
+            self?.tweets = tweets
         }
     }
     
@@ -112,4 +112,3 @@ extension ProfileController: ProfileHeaderDelegate {
         navigationController?.popViewController(animated: true)
     }
 }
-

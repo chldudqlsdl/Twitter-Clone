@@ -42,8 +42,8 @@ class FeedController: UICollectionViewController {
     // MARK: - API
     
     func fetchTweets() {
-        TweetService.shared.fetchTweets { tweets in
-            self.tweets = tweets
+        TweetService.shared.fetchTweets { [weak self] tweets in
+            self?.tweets = tweets
         }
     }
     
