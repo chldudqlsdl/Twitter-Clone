@@ -12,6 +12,7 @@ import SnapKit
 
 protocol ProfileHeaderDelegate: AnyObject {
     func handleDismissal()
+    func handleEditProfileFollow(_ header: ProfileHeader)
 }
 
 class ProfileHeader: UICollectionReusableView {
@@ -46,7 +47,7 @@ class ProfileHeader: UICollectionReusableView {
         $0.layer.borderColor = UIColor.systemBackground.cgColor
     }
     
-    private lazy var editProfileFollowButton = UIButton(type: .system).then {
+    lazy var editProfileFollowButton = UIButton(type: .system).then {
         $0.setTitle("Loading", for: .normal)
         $0.setTitleColor(UIColor.twitterBlue, for: .normal)
         $0.layer.borderColor = UIColor.twitterBlue.cgColor
@@ -177,7 +178,7 @@ class ProfileHeader: UICollectionReusableView {
         delegate?.handleDismissal()
     }
     @objc func handleEditProfileFollow() {
-        
+        delegate?.handleEditProfileFollow(self)
     }
     
     @objc func handleFollowingTapped() {

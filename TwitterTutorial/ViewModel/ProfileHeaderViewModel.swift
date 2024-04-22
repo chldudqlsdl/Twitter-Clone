@@ -28,18 +28,22 @@ class ProfileHeaderViewModel {
     private let user: User
     
     var followersString: NSAttributedString? {
-        return attributedText(withValue: 0, text: "followers")
+        return attributedText(withValue: user.stats?.followers ?? 0, text: "followers")
     }
     
     var followingString: NSAttributedString? {
-        return attributedText(withValue: 2, text: "following")
+        return attributedText(withValue: user.stats?.following ?? 0, text: "following")
     }
     
     var followButtonTitle: String {
         if user.isCurrentUser {
             return "Edit Profile"
         } else {
-            return "Follow"
+            if !user.isFollowed {
+                return "Follow"
+            } else {
+                return "Following"
+            }
         }
     }
     
@@ -54,4 +58,3 @@ class ProfileHeaderViewModel {
         return attributedTitle
     }
 }
-
