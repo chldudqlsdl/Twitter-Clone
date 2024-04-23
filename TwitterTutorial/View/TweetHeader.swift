@@ -162,6 +162,7 @@ class TweetHeader: UICollectionReusableView {
         actionStack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(12)
+//            $0.top.equalTo(statsView.snp.bottom).offset(16)
         }
     }
     

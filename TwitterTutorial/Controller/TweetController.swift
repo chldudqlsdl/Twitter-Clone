@@ -16,6 +16,10 @@ class TweetController: UICollectionViewController {
     // MARK: - Properties
     private let tweet: Tweet
     
+    private var replies: [Tweet] = [] {
+        didSet { collectionView.reloadData() }
+    }
+    
     // MARK: - Lifecycle
     init(tweet: Tweet) {
         self.tweet = tweet
@@ -29,7 +33,7 @@ class TweetController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        
+        fetchReplies()
     }
     
     // MARK: - Helpers
@@ -39,6 +43,14 @@ class TweetController: UICollectionViewController {
         collectionView.register(TweetHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
+    
+    
+    // MARK: - Helpers
+    func fetchReplies() {
+        TweetService.shared.fetchReplies(forTweet: tweet) { [weak self] replies in
+            self?.replies = replies
+        }
+    }
 }
 
 
@@ -46,10 +58,11 @@ class TweetController: UICollectionViewController {
 
 extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return replies.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        cell.tweet = replies[indexPath.row]
         return cell
     }
 }
@@ -75,6 +88,8 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        let viewModel = TweetViewModel(tweet: replies[indexPath.row])
+        let height = viewModel.size(forWidth: view.frame.width - 80, withFontSize: 14).height
+        return CGSize(width: view.frame.width, height: height + 80)
     }
 }
