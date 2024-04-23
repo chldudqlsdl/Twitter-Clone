@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol TweetCellDelegate: AnyObject {
-    func handelProfileImageTapped(_ cell: TweetCell)
+    func handleProfileImageTapped(_ cell: TweetCell)
+    func handleCommentTapped(_ cell: TweetCell)
 }
 
 class TweetCell : UICollectionViewCell {
@@ -126,11 +127,10 @@ class TweetCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Selectors
     
     @objc func handleCommentTapped() {
-
+        delegate?.handleCommentTapped(self)
     }
     @objc func handleRetweetTapped() {
         
@@ -142,7 +142,7 @@ class TweetCell : UICollectionViewCell {
         
     }
     @objc func handleProfileImageTapped() {
-        delegate?.handelProfileImageTapped(self)
+        delegate?.handleProfileImageTapped(self)
     }
     
     

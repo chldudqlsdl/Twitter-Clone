@@ -17,7 +17,6 @@ class CaptionTextView: UITextView {
     let placeholderLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .darkGray
-        $0.text = "What's happening?"
     }
     
     // MARK: - Lifecycle
@@ -30,7 +29,7 @@ class CaptionTextView: UITextView {
         isScrollEnabled = false
         
         self.snp.makeConstraints {
-            $0.height.equalTo(300)
+            $0.height.equalTo(100)
         }
         
         addSubview(placeholderLabel)

@@ -13,11 +13,12 @@ import Kingfisher
 class UploadTweetController: UIViewController {
     
     // MARK: - Properties
-    private let user : User
+    private let user: User
+    private let config: UploadTweetConfiguration
+    private lazy var viewModel = UploadTweetViewModel(config: config)
     
     private lazy var actionButton = UIButton(type: .system).then {
         $0.backgroundColor = .twitterBlue
-        $0.setTitle("Tweet", for: .normal)
         $0.titleLabel?.textAlignment = .center
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         $0.setTitleColor(.white, for: .normal)
@@ -35,18 +36,32 @@ class UploadTweetController: UIViewController {
         $0.backgroundColor = .twitterBlue
     }
     
+    private let replyLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textColor = .lightGray
+    }
+    
     private let captionTextView = CaptionTextView()
     
-    private lazy var stackView = UIStackView().then {
+    private lazy var imageCaptionStack = UIStackView().then {
         $0.addArrangedSubview(profileImageView)
         $0.addArrangedSubview(captionTextView)
         $0.axis = .horizontal
         $0.spacing = 12
+        $0.alignment = .top
+    }
+    
+    private lazy var stackView = UIStackView().then {
+        $0.addArrangedSubview(replyLabel)
+        $0.addArrangedSubview(imageCaptionStack)
+        $0.axis = .vertical
+        $0.spacing = 12
     }
     
     // MARK: - LifeCycle
-    init(user: User) {
+    init(user: User, config: UploadTweetConfiguration) {
         self.user = user
+        self.config = config
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,6 +109,12 @@ class UploadTweetController: UIViewController {
         }
         
         profileImageView.kf.setImage(with: user.profileImageUrl)
+        
+        actionButton.setTitle(viewModel.actionButtonTitle, for: .normal)
+        captionTextView.placeholderLabel.text = viewModel.placeholderText
+        replyLabel.isHidden = !viewModel.shouldShowReplyLabel
+        guard let replyText = viewModel.replyText else { return }
+        replyLabel.text = replyText
     }
     
     func configureNavigtionBar() {
@@ -101,5 +122,4 @@ class UploadTweetController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
 }
-
 
