@@ -122,5 +122,3 @@ class UploadTweetController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
 }
-
-

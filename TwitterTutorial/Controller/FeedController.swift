@@ -128,4 +128,8 @@ extension FeedController: TweetCellDelegate {
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
     }
+    
+    func handleLikeTapped(_ cell: TweetCell) {
+        cell.tweet?.didLike.toggle()
+    }
 }
