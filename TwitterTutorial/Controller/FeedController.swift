@@ -44,9 +44,19 @@ class FeedController: UICollectionViewController {
     func fetchTweets() {
         TweetService.shared.fetchTweets { [weak self] tweets in
             self?.tweets = tweets
+            self?.checkIfUserLikedTweet(tweets)
         }
     }
     
+    func checkIfUserLikedTweet(_ tweets: [Tweet]) {
+        for (index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                if didLike {
+                    self.tweets[index].didLike = true
+                }
+            }
+        }
+    }
     
     // MARK: - Helpers
     
@@ -91,6 +101,7 @@ extension FeedController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
         cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
     
@@ -114,6 +125,7 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 
 extension FeedController: TweetCellDelegate {
     
+    
     func handleProfileImageTapped(_ cell: TweetCell) {
         
         guard let user = cell.tweet?.user else { return }
@@ -129,7 +141,24 @@ extension FeedController: TweetCellDelegate {
         present(nav, animated: true)
     }
     
-    func handleLikeTapped(_ cell: TweetCell) {
-        cell.tweet?.didLike.toggle()
+    func handleLikeTapped(_ cell: TweetCell, _ indexPath: IndexPath?) {
+        guard let tweet = cell.tweet else { return }
+        guard let indexPath = indexPath else { return }
+        
+        TweetService.shared.likeTweet(tweet: tweet) { err, ref in
+            UIView.animate(withDuration: 0.5) {
+                cell.tweet?.didLike.toggle()
+                self.tweets[indexPath.row].didLike.toggle()
+            }
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            
+            self.tweets[indexPath.row].likes = likes
+            cell.tweet?.likes = likes
+            
+            // NotiUpload 는 좋아요를 눌렀을 때만
+            if !tweet.didLike {
+                NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+            }
+        }
     }
 }

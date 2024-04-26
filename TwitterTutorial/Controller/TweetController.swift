@@ -14,8 +14,8 @@ private let headerIdentifier = "TweetHeader"
 class TweetController: UICollectionViewController {
     
     // MARK: - Properties
-    private let tweet: Tweet
-    private let actionSheetLauncher: ActionSheetLauncher
+    private var tweet: Tweet 
+    private var actionSheetLauncher: ActionSheetLauncher
     private var replies: [Tweet] = [] {
         didSet { collectionView.reloadData() }
     }
@@ -45,11 +45,16 @@ class TweetController: UICollectionViewController {
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    
-    // MARK: - Helpers
     func fetchReplies() {
         TweetService.shared.fetchReplies(forTweet: tweet) { [weak self] replies in
             self?.replies = replies
+        }
+    }
+    
+    func checkIfUserIsFollowed(completion: @escaping () -> Void) {
+        UserService.shared.checkIfUserIsFollowed(uid: tweet.user.uid) { isFollowed in
+            self.tweet.user.isFollowed = isFollowed
+            completion()
         }
     }
 }
@@ -100,8 +105,11 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
 extension TweetController: TweetHeaderDelegate {
     
     func showActionSheet() {
-        actionSheetLauncher.delegate = self
-        actionSheetLauncher.show()
+        checkIfUserIsFollowed { [weak self] in
+            self?.actionSheetLauncher = ActionSheetLauncher(user: (self?.tweet.user)!)
+            self?.actionSheetLauncher.delegate = self
+            self?.actionSheetLauncher.show()
+        }
     }
 }
 
@@ -113,6 +121,7 @@ extension TweetController: ActionSheetLauncherDelegate {
         case .follow(let user):
             UserService.shared.followUser(uid: user.uid) { err, ref in
                 print("\(user.fullname) 팔로우 하였습니다")
+                NotificationService.shared.uploadNotification(type: .follow, user: user)
             }
         case .unfollow(let user):
             UserService.shared.unFollowUser(uid: user.uid) { err, ref in

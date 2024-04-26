@@ -56,7 +56,6 @@ class ActionSheetLauncher: NSObject {
         self.user = user
         super.init()
         configureTableView()
-        checkIfUserIsFollowed()
     }
     
     
@@ -65,7 +64,11 @@ class ActionSheetLauncher: NSObject {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
             self.tableView.frame.origin.y += self.actionSheetHeight
+        } completion: { _ in
+            self.blackView.removeFromSuperview()
+            self.tableView.removeFromSuperview()
         }
+
     }
     
     // MARK: - Helpers
@@ -89,11 +92,7 @@ class ActionSheetLauncher: NSObject {
 //        self.window = window
     }
     
-    func checkIfUserIsFollowed() {
-        UserService.shared.checkIfUserIsFollowed(uid: user.uid) { isFollowed in
-            self.user.isFollowed = isFollowed
-        }
-    }
+    
     
     func configureTableView() {
         tableView.backgroundColor = .systemBackground
@@ -102,7 +101,7 @@ class ActionSheetLauncher: NSObject {
         
         tableView.rowHeight = 60
         tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = 5
+        tableView.layer.cornerRadius = 15
         tableView.isScrollEnabled = false
         
         tableView.register(ActionSheetCell.self, forCellReuseIdentifier: reuseIdentifier)

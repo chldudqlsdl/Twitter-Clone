@@ -12,7 +12,7 @@ import Kingfisher
 protocol TweetCellDelegate: AnyObject {
     func handleProfileImageTapped(_ cell: TweetCell)
     func handleCommentTapped(_ cell: TweetCell)
-    func handleLikeTapped(_ cell: TweetCell)
+    func handleLikeTapped(_ cell: TweetCell, _ indexPath: IndexPath?)
 }
 
 class TweetCell : UICollectionViewCell {
@@ -22,6 +22,8 @@ class TweetCell : UICollectionViewCell {
     var tweet: Tweet? {
         didSet { configure() }
     }
+    
+    var indexPath: IndexPath?
     
     weak var delegate: TweetCellDelegate?
     
@@ -67,8 +69,6 @@ class TweetCell : UICollectionViewCell {
         $0.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
     }
     private lazy var likeButton = UIButton(type: .system).then {
-        $0.setImage(UIImage(named: "like"), for: .normal)
-        $0.tintColor = .darkGray
         $0.setDimensions(width: 20, height: 20)
         $0.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
     }
@@ -137,7 +137,7 @@ class TweetCell : UICollectionViewCell {
         
     }
     @objc func handleLikeTapped() {
-        delegate?.handleLikeTapped(self)
+        delegate?.handleLikeTapped(self, self.indexPath)
     }
     @objc func handleShareTapped() {
         
@@ -155,6 +155,8 @@ class TweetCell : UICollectionViewCell {
         captionLabel.text = tweet.caption
         profileImageView.kf.setImage(with: viewModel.profileImageUrl)
         infoLabel.attributedText = viewModel.userInfoText
+        likeButton.tintColor = viewModel.likeButtonTintColor
+        likeButton.setImage(viewModel.likeButtonImage, for: .normal)
     }
 }
 

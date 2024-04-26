@@ -150,6 +150,7 @@ extension ProfileController: ProfileHeaderDelegate {
                 self.user.isFollowed = true
                 self.collectionView.reloadData()
                 print("팔로우 되었습니다")
+                NotificationService.shared.uploadNotification(type: .follow, user: self.user)
             }
         }
         

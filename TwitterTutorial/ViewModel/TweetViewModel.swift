@@ -46,6 +46,15 @@ class TweetViewModel {
         return title
     }
     
+    var likeButtonTintColor: UIColor {
+        return tweet.didLike ? .red : .darkGray
+    }
+    
+    var likeButtonImage: UIImage {
+        let imageName = tweet.didLike ? "like_filled" : "like"
+        return UIImage(named: imageName)!
+    }
+    
     var retweetString: NSAttributedString? {
         return attributedText(withValue: tweet.retweetCount , text: "Retweets")
     }
@@ -77,4 +86,5 @@ class TweetViewModel {
         return measurementLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
 }
+
 
