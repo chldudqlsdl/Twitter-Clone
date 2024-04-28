@@ -98,7 +98,7 @@ class TweetCell : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
-        
+                
         addSubview(profileImageView)
         profileImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)

@@ -12,13 +12,24 @@ private var reuseIdentifier = "NotificationCell"
 class NotificationsController: UITableViewController {
 
     // MARK: - Properties
-    private var notifications: [Notification] = []
+    private var notifications: [Notification] = [] {
+        didSet { tableView.reloadData() }
+    }
     
     // MARK: - LifeCycles
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        fetchNotifications()
+    }
+    
+    // MARK: - API
+    
+    func fetchNotifications() {
+        NotificationService.shared.fetchNotification { [weak self] notifications in
+            self?.notifications = notifications
+        }
     }
     
     // MARK: - Helpers
@@ -35,11 +46,24 @@ class NotificationsController: UITableViewController {
 
 extension NotificationsController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return notifications.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationCell
+        cell.notification = notifications[indexPath.row]
+        cell.delegate = self
         return cell
+    }
+    
+}
+
+// MARK: - NotificationCellDelegate
+
+extension NotificationsController: NotificationCellDelegate {
+    func didTapProfileImage(_ cell: NotificationCell) {
+        guard let user = cell.notification?.user else { return }
+        let vc = ProfileController(user: user)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

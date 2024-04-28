@@ -8,9 +8,19 @@
 import Foundation
 import UIKit
 
+protocol NotificationCellDelegate: AnyObject {
+    func didTapProfileImage(_ cell: NotificationCell)
+}
+
 class NotificationCell: UITableViewCell {
     
     // MARK: - Properties
+    
+    var notification: Notification? {
+        didSet { configure() }
+    }
+    
+    weak var delegate: NotificationCellDelegate?
     
     private lazy var profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -27,7 +37,7 @@ class NotificationCell: UITableViewCell {
     private let notificationLabel = UILabel().then {
         $0.numberOfLines = 2
         $0.font = UIFont.systemFont(ofSize: 14)
-        $0.text = "some test notification message"
+        
     }
     
     private lazy var stackView = UIStackView().then {
@@ -35,6 +45,7 @@ class NotificationCell: UITableViewCell {
         $0.addArrangedSubview(notificationLabel)
         $0.spacing = 8
         $0.alignment = .center
+        
     }
     
     // MARK: - Lifecycle
@@ -42,11 +53,12 @@ class NotificationCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
                 
-        addSubview(stackView)
+        contentView.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(12)
         }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +69,16 @@ class NotificationCell: UITableViewCell {
     // MARK: - Selector
     
     @objc func handleProfileImageTapped() {
+        delegate?.didTapProfileImage(self)
+    }
+    
+    
+    // MARK: - Helpers
+    func configure() {
+        guard let notification = notification else { return }
+        let viewModel = NotificationViewModel(notification: notification)
         
+        profileImageView.kf.setImage(with: viewModel.profileImageUrl)
+        notificationLabel.attributedText = viewModel.notificationText
     }
 }
