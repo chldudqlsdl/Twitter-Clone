@@ -198,14 +198,11 @@
 		D923B42E2BC6BA0600F952C3 /* TwitterTutorial */ = {
 			isa = PBXGroup;
 			children = (
+				D93F43C52C25C03A00AB0840 /* App */,
+				D923B4432BC6BA9500F952C3 /* Network */,
 				D923B4472BC6BAAD00F952C3 /* Model */,
-				D923B4462BC6BAAB00F952C3 /* View */,
-				D923B4452BC6BAAA00F952C3 /* ViewModel */,
-				D923B4442BC6BAA900F952C3 /* Controller */,
-				D923B4432BC6BA9500F952C3 /* API */,
+				D93F43C62C25C07500AB0840 /* Presentation */,
 				D923B4482BC6BBF400F952C3 /* Utils */,
-				D923B42F2BC6BA0600F952C3 /* AppDelegate.swift */,
-				D923B4312BC6BA0600F952C3 /* SceneDelegate.swift */,
 				D923B4352BC6BA0600F952C3 /* Main.storyboard */,
 				D923B4382BC6BA0700F952C3 /* Assets.xcassets */,
 				D923B43A2BC6BA0700F952C3 /* LaunchScreen.storyboard */,
@@ -215,7 +212,7 @@
 			path = TwitterTutorial;
 			sourceTree = "<group>";
 		};
-		D923B4432BC6BA9500F952C3 /* API */ = {
+		D923B4432BC6BA9500F952C3 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				D9F3C8B32BCA3DCB005EB50E /* AuthService.swift */,
@@ -223,51 +220,7 @@
 				D9A2510E2BD0E2D6002F57AC /* TweetService.swift */,
 				D901C66F2BDBB5CB00CA798B /* NotificationService.swift */,
 			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		D923B4442BC6BAA900F952C3 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				D92492182BC7AFE70066E43F /* Authentication */,
-				D923B4492BC6BCAF00F952C3 /* MainTabController.swift */,
-				D923B44B2BC6BEB300F952C3 /* FeedController.swift */,
-				D923B44D2BC6BF0400F952C3 /* ExploreController.swift */,
-				D923B44F2BC6BF1D00F952C3 /* NotificationsController.swift */,
-				D923B4512BC6BF3B00F952C3 /* ConversationsController.swift */,
-				D9F3C8BC2BCADD42005EB50E /* UploadTweetController.swift */,
-				D98165B52BD2311B007B7C79 /* ProfileController.swift */,
-				D9D45E742BD6B21F00124E09 /* TweetController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D923B4452BC6BAAA00F952C3 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D9A251142BD166DB002F57AC /* TweetViewModel.swift */,
-				D98165BF2BD2B621007B7C79 /* ProfileHeaderViewModel.swift */,
-				D97C3B452BD7EC3100C9EB22 /* UploadTweetViewModel.swift */,
-				D967334E2BDA7737001105C3 /* ActionSheetViewModel.swift */,
-				D9487E972BDE33F9001B56D1 /* NotificationViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D923B4462BC6BAAB00F952C3 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D9F3C8BE2BCFC553005EB50E /* CaptionTextView.swift */,
-				D9A251122BD116F4002F57AC /* TweetCell.swift */,
-				D98165B92BD25DBC007B7C79 /* ProfileHeader.swift */,
-				D98165BB2BD294D7007B7C79 /* ProfileFilterView.swift */,
-				D98165BD2BD29817007B7C79 /* ProfileFilterCell.swift */,
-				D9CF98052BD3F25C00230F6D /* UserCell.swift */,
-				D9D45E762BD6B53000124E09 /* TweetHeader.swift */,
-				D967334C2BDA6BAF001105C3 /* ActionSheetCell.swift */,
-				D901C6712BDBE04100CA798B /* NotificationCell.swift */,
-			);
-			path = View;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		D923B4472BC6BAAD00F952C3 /* Model */ = {
@@ -291,13 +244,124 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		D92492182BC7AFE70066E43F /* Authentication */ = {
+		D93F43C52C25C03A00AB0840 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D923B42F2BC6BA0600F952C3 /* AppDelegate.swift */,
+				D923B4312BC6BA0600F952C3 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D93F43C62C25C07500AB0840 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D93F43C72C25C09200AB0840 /* AuthenticationScene */,
+				D93F43C82C25C0DB00AB0840 /* MainTabBarScene */,
+				D93F43CD2C25C2AB00AB0840 /* FeedScene */,
+				D93F43CF2C25C2C900AB0840 /* UploadTweetScene */,
+				D93F43CC2C25C27600AB0840 /* ProfileScene */,
+				D93F43CA2C25C1A700AB0840 /* TweetScene */,
+				D93F43CE2C25C2B600AB0840 /* ExploreScene */,
+				D93F43C92C25C16B00AB0840 /* NotificationScene */,
+				D93F43D02C25C30A00AB0840 /* ConversationScene */,
+				D93F43CB2C25C26600AB0840 /* Common */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D93F43C72C25C09200AB0840 /* AuthenticationScene */ = {
 			isa = PBXGroup;
 			children = (
 				D92492192BC7B0050066E43F /* LoginController.swift */,
 				D924921D2BC7B0D70066E43F /* RegistrationController.swift */,
 			);
-			path = Authentication;
+			path = AuthenticationScene;
+			sourceTree = "<group>";
+		};
+		D93F43C82C25C0DB00AB0840 /* MainTabBarScene */ = {
+			isa = PBXGroup;
+			children = (
+				D923B4492BC6BCAF00F952C3 /* MainTabController.swift */,
+			);
+			path = MainTabBarScene;
+			sourceTree = "<group>";
+		};
+		D93F43C92C25C16B00AB0840 /* NotificationScene */ = {
+			isa = PBXGroup;
+			children = (
+				D901C6712BDBE04100CA798B /* NotificationCell.swift */,
+				D9487E972BDE33F9001B56D1 /* NotificationViewModel.swift */,
+				D923B44F2BC6BF1D00F952C3 /* NotificationsController.swift */,
+			);
+			path = NotificationScene;
+			sourceTree = "<group>";
+		};
+		D93F43CA2C25C1A700AB0840 /* TweetScene */ = {
+			isa = PBXGroup;
+			children = (
+				D9D45E762BD6B53000124E09 /* TweetHeader.swift */,
+				D967334E2BDA7737001105C3 /* ActionSheetViewModel.swift */,
+				D967334C2BDA6BAF001105C3 /* ActionSheetCell.swift */,
+				D9A251142BD166DB002F57AC /* TweetViewModel.swift */,
+				D9D45E742BD6B21F00124E09 /* TweetController.swift */,
+			);
+			path = TweetScene;
+			sourceTree = "<group>";
+		};
+		D93F43CB2C25C26600AB0840 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D9A251122BD116F4002F57AC /* TweetCell.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D93F43CC2C25C27600AB0840 /* ProfileScene */ = {
+			isa = PBXGroup;
+			children = (
+				D98165B92BD25DBC007B7C79 /* ProfileHeader.swift */,
+				D98165BB2BD294D7007B7C79 /* ProfileFilterView.swift */,
+				D98165BD2BD29817007B7C79 /* ProfileFilterCell.swift */,
+				D98165B52BD2311B007B7C79 /* ProfileController.swift */,
+				D98165BF2BD2B621007B7C79 /* ProfileHeaderViewModel.swift */,
+			);
+			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		D93F43CD2C25C2AB00AB0840 /* FeedScene */ = {
+			isa = PBXGroup;
+			children = (
+				D923B44B2BC6BEB300F952C3 /* FeedController.swift */,
+			);
+			path = FeedScene;
+			sourceTree = "<group>";
+		};
+		D93F43CE2C25C2B600AB0840 /* ExploreScene */ = {
+			isa = PBXGroup;
+			children = (
+				D9CF98052BD3F25C00230F6D /* UserCell.swift */,
+				D923B44D2BC6BF0400F952C3 /* ExploreController.swift */,
+			);
+			path = ExploreScene;
+			sourceTree = "<group>";
+		};
+		D93F43CF2C25C2C900AB0840 /* UploadTweetScene */ = {
+			isa = PBXGroup;
+			children = (
+				D9F3C8BE2BCFC553005EB50E /* CaptionTextView.swift */,
+				D9F3C8BC2BCADD42005EB50E /* UploadTweetController.swift */,
+				D97C3B452BD7EC3100C9EB22 /* UploadTweetViewModel.swift */,
+			);
+			path = UploadTweetScene;
+			sourceTree = "<group>";
+		};
+		D93F43D02C25C30A00AB0840 /* ConversationScene */ = {
+			isa = PBXGroup;
+			children = (
+				D923B4512BC6BF3B00F952C3 /* ConversationsController.swift */,
+			);
+			path = ConversationScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,9 +684,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BrownUIKit.TwitterTutorial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -649,9 +716,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BrownUIKit.TwitterTutorial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
