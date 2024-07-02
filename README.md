@@ -44,12 +44,10 @@
 <br />
 
 
-## 🤔 개발과정의 고민
-
+## 🤔 개발과정의 고민 및 학습한 점
 <details>
-<summary><strong style="font-size: 1.2em;">고민한 점</strong></summary>
-
-## 순환참조를 통한 메모리 누수를 실험을 통해 눈으로 확인
+<summary><strong style="font-size: 1.2em;">순환참조를 통한 메모리 누수를 실험을 통해 눈으로 확인</strong></summary>
+<br>
 
 **[실험영상링크(Youtube)](https://youtu.be/3YWHEmkB2C0?si=6q0Q1wwKUlTxYHmC&t=1m44s)**
 
@@ -87,11 +85,11 @@ class ProfileHeader: UICollectionReusableView {
 <img width="250" src="https://github.com/chldudqlsdl/Twitter-Clone/assets/83645833/59298d38-ed09-47ba-8a04-b124e3e71222">
 
 <img width="250" alt="스크린샷 2024-06-22 오후 4 31 19" src="https://github.com/chldudqlsdl/Twitter-Clone/assets/83645833/ba36dab7-67ba-4d68-bf61-ab245bbbb44e">
+</details>
 
-
-
-## 커스텀 액션시트 만들기
-
+<details>
+<summary><strong style="font-size: 1.2em;">커스텀 액션시트 만들기</strong></summary>
+<br>
 <img width="200" alt="스크린샷 2024-06-22 오후 6 00 35" src="https://github.com/chldudqlsdl/Twitter-Clone/assets/83645833/d32537ff-d5bb-434f-b90c-83e337dbf2c9">
 
 <br>
